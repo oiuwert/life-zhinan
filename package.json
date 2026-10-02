@@ -1,0 +1,38 @@
+{
+  "name": "life-zhinan",
+  "version": "0.1.0",
+  "description": "紫微斗数 × 人类图双系统互证 MCP — 一条 npx 命令接入任何 agent 的命理互证引擎",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "life-zhinan": "src/index.js"
+  },
+  "files": [
+    "src",
+    "mappings",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test/golden.mjs",
+    "e2e": "node test/mcp.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "ziwei",
+    "human-design",
+    "divination",
+    "agent",
+    "npx"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "astronomy-engine": "^2.1.19",
+    "iztro": "^2.6.1",
+    "yaml": "^2.9.1",
+    "zod": "^3.25.76"
+  }
+}

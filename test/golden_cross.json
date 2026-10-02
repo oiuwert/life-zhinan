@@ -1,0 +1,125 @@
+{
+  "engine": {
+    "name": "compass-cross",
+    "version": "0.1.0",
+    "credit": "Compass P1 cross engine"
+  },
+  "meta": {
+    "map_version": "0.2",
+    "rules_status": [
+      "verified_1sample"
+    ]
+  },
+  "gate": {
+    "ziwei_ok": true,
+    "humandesign_ok": true
+  },
+  "input": {
+    "birth": "1990-03-15 12:00",
+    "tz": "+08:00",
+    "gender": "男",
+    "name": "样本二",
+    "age": 36
+  },
+  "signals": [
+    {
+      "axis": "expression",
+      "theme": "人生角色",
+      "zwds_evidence": "命宫['天机旺', '巨门庙'] + 迁移['tianxi', 'xianchi', 'bazuo', 'tiangui', 'tiancai', 'tianshou', 'tiande'] + 身宫丑武曲 → 试错体质+被当作靠谱协调者+对外打破秩序",
+      "hd_evidence": "profile = 2/4 ()",
+      "verdict": "partial",
+      "confidence": "green"
+    },
+    {
+      "axis": "expression",
+      "theme": "国王与交易者(资源聚集×价值交换)",
+      "zwds_evidence": "财帛=['天同']",
+      "hd_evidence": "",
+      "verdict": "partial",
+      "confidence": "yellow"
+    },
+    {
+      "axis": "decision",
+      "theme": "思绪/洞察是环境面",
+      "zwds_evidence": "化忌落['wealth']",
+      "hd_evidence": "头部/逻辑中心开放(灵感与思维受环境影响)",
+      "verdict": "partial",
+      "confidence": "blue"
+    },
+    {
+      "axis": "chapter",
+      "theme": "当前大限 36-45岁",
+      "zwds_evidence": "children宫 武曲/天府 [武曲权]",
+      "hd_evidence": "(章节框架对照, 待时序验证)",
+      "verdict": "partial",
+      "confidence": "blue"
+    }
+  ],
+  "differences": [
+    {
+      "axis": "ignition",
+      "theme": "能量发动方式",
+      "zwds_evidence": "推断 undetermined ({'manifestor': 0, 'generator': 1, 'projector': 2})",
+      "hd_evidence": "类型 manifestor",
+      "verdict": "difference",
+      "confidence": "yellow"
+    }
+  ],
+  "insights": [],
+  "facts": {
+    "hd": {
+      "type": "显示者",
+      "profile": "2/4",
+      "authority": "情绪权威（等情绪波落定再决定）",
+      "definition": "split",
+      "channels": [
+        "12-22 开放",
+        "28-38"
+      ],
+      "cross": "right-angle 36-6-11-12",
+      "defined_centers": [
+        "root",
+        "solar-plexus",
+        "spleen",
+        "throat"
+      ],
+      "open_centers": [
+        "ajna",
+        "g",
+        "head",
+        "heart",
+        "sacral"
+      ]
+    },
+    "zwds": {
+      "soul": "天机旺+巨门庙",
+      "san_fang": {
+        "soul": [
+          "天机",
+          "巨门"
+        ],
+        "wealth": [
+          "天同"
+        ],
+        "career": [],
+        "surface": []
+      },
+      "mutagens": {
+        "禄": [
+          "太阳→夫妻宫"
+        ],
+        "权": [
+          "武曲→子女宫"
+        ],
+        "科": [
+          "太阴→夫妻宫"
+        ],
+        "忌": [
+          "天同→财帛宫"
+        ]
+      },
+      "five_elements_class": "水二局"
+    }
+  },
+  "disclaimer": "本报告为文化/叙事系统的符号结构对照，非因果证明、非预测工具。映射规则验证状态: ['verified_1sample']——仅单样本验证，存在事后贴合风险。不构成医疗/法律/投资依据。"
+}

@@ -1,0 +1,245 @@
+# Compass 互证映射表 v0.2 — 紫微斗数 ↔ 人类图
+# 结构化自 v0.1（Obsidian CrossAgentVault/指南针/互证映射表-v0.1.md）
+# v0.2 变更（2026-08-27）：
+#   1. 全部规则机器可读（本文件是唯一权威源，Obsidian 文档降级为人读版）
+#   2. 修正 v0.1 数据错误：
+#      - 「陀罗坐命」→「陀罗坐福德寅」（ziwei_calc.py 排错，iztro-py 认证盘为准）
+#      - 擎羊实际落事业宫辰（非福德）；左辅落夫妻宫戌；右弼落事业宫辰
+#      - 「45-26 国王与交易者通道」提法废弃：HD 无此通道。正确表述 =
+#        交叉设计轴含闸门45(国王)+26(交易者) + 完成「26-44 投降/企业家通道」
+#   3. 新增 provenance 字段：每条规则标注依据来源与验证状态
+# 验证状态约定：verified_1sample=仅基准样本盘验证 | untested=待样本盘检验
+# 样本要求：≥3 张独立样本盘（不同类型/权威）通过后才可升级为默认规则
+
+meta:
+  version: "0.2"
+  date: "2026-08-27"
+  engines:
+    ziwei: {name: compass-ziwei, min_version: "0.1.0", core: iztro-py 0.5.0}
+    humandesign: {name: renlei-tu, min_version: "0.2.0"}
+  rational_framework: >
+    两系统均为文化/叙事系统。互证 = 符号结构对照，非因果证明。
+    输出必须带声明；不预判死亡灾难，不做医疗/法律/投资依据，
+    不分析未经同意的他人盘。
+  sample_validation:
+    required_independent_charts: 3
+    verified_with: [基准样本盘 1990-03-15 午时男]   # 已知盘，存在事后贴合风险
+
+# ─────────────────────────────────────────────
+# 三轴总纲（映射的地基）
+# ─────────────────────────────────────────────
+axes:
+  ignition:      # A. 发动轴：能量怎么发动
+    zwds_side: 主星三元素（M1）
+    hd_side: 类型与策略
+    rule_id: M1
+  expression:    # B. 显化轴：怎么被看见/人生舞台在哪
+    zwds_side: 宫位主题+三方四正（M2）
+    hd_side: 定义中心+通道+轮回交叉+人生角色
+    rule_id: M2
+  decision:      # C. 决策轴：怎么做决定/课题在哪
+    zwds_side: 四化+煞星+亮度（M3）
+    hd_side: 内在权威+开放中心
+    rule_id: M3
+
+# ─────────────────────────────────────────────
+# M1 主星 ↔ 类型（发动轴）
+# ─────────────────────────────────────────────
+m1_star_elements:
+  # 三元素模型 + 一个正交情绪标记
+  manifestor_element:      # 显示者元素：自主发动
+    stars: [紫微, 七杀, 破军, 贪狼]
+    hd_correspondence: 显示者告知后行动 / MG 快速显化面
+  generator_element:       # 生产者元素：回应执行
+    stars: [武曲, 太阳, 天府, 天同]
+    hd_correspondence: 生产者等待回应+持续产出
+  projector_element:       # 投射者元素：引导协调
+    stars: [天相, 天梁, 太阴, 天机, 巨门]
+    hd_correspondence: 投射者等待邀请+引导他人
+  emotional_marker:        # 正交标记：不参与计数
+    stars: [廉贞]
+    hd_correspondence: 情绪中心定义探测器
+
+m1_rules:
+  - id: R1
+    name: 三方四正类型判定
+    steps:
+      - 取命宫主星（空宫借对宫迁移宫，标 borrow）
+      - 统计命/财/业/迁四宫主星元素计数（廉贞不计）
+      - 判定表:
+          "manifestor>=2 and generator>=2": manifesting-generator
+          "manifestor>=2 and generator<2": manifestor-leaning
+          "generator>=2 and manifestor<2": generator-leaning
+          "projector>=3 and manifestor==0": projector-leaning
+          "命宫空且全盘无力": reflector-check
+    pitfall: 只看命宫会误判——基准样本盘命宫廉相(投射者相)而三方双元素实为 MG
+    status: verified_1sample
+  - id: R1b
+    name: 煞星节奏修正
+    body: 福德/命宫带陀罗擎羊 → 发动轴减速（拖延/冲突），不改类型只改策略节奏
+    status: verified_1sample
+
+# ─────────────────────────────────────────────
+# M2 宫位主题 ↔ 人生主题（显化轴）
+# ─────────────────────────────────────────────
+m2_palace_centers:   # 十二宫 → 九中心投影（多对一）
+  soul:      {hd: [g-center, personality-sun-earth], confidence: high}
+  body_palace_to_design: true   # 身宫所在宫 ↔ 设计太阳/地球（身体本性）
+  wealth:    {hd: [heart-center, gate-45, gate-26], confidence: high}
+  career:    {hd: [throat, gate-26], confidence: high}
+  health:    {hd: [spleen], confidence: high}
+  spirit:    {hd: [head-center, solar-plexus], confidence: medium}
+  property:  {hd: [root], confidence: medium}
+  surface:   {hd: [g-direction-aspect], confidence: medium}
+  spouse:    {hd: [solar-plexus, gate-59], confidence: medium}
+  children:  {hd: [sacral], confidence: medium}
+  friends:   {hd: [throat-listening, gate-13], confidence: medium}
+  parents:   {hd: [spleen-lineage], confidence: low}
+  siblings:  {hd: [gate-59-peer, gate-13-peer], confidence: low}
+
+m2_rules:
+  - id: R2
+    name: 三方四正 = 定义网络对照
+    body: >
+      三方四正四宫主星组合 = 人类图定义中心+通道的主题舞台。
+      宫位命中 HD 主题域 ≥2 处 🟢 / 1 处 🟡 / 0 处记差异点。
+    status: verified_1sample
+  - id: R2b
+    name: 轮回交叉术语规范
+    body: >
+      表述交叉主题时必须区分：①四闸门本身（如 design-sun=45, design-earth=26）
+      ②完成通道（需两闸门成对在 CHANNELS 表中）。禁止杜撰"X-Y通道"。
+      交叉主题描述用"交叉设计轴含闸门45+26"，通道另述。
+    created_because: v0.1 曾误写"45-26通道"；正确事实=26-44投降/企业家通道
+    status: verified_1sample
+
+m2_profile_lines:   # 人生角色爻线 ↔ 紫微信号
+  line3_trial:      # 3爻 试错/烈士
+    zwds_signals: [命宫带廉贞破军七杀火星, 迁移破军变动, 煞星多折腾]
+    verified: 基准样本盘（廉贞陀罗命+破军迁移 ↔ 3/5）
+  line5_heresiarch: # 5爻 异端/救世主
+    zwds_signals: [迁移宫破军(对外打破秩序), 命宫天相(被当作靠谱协调者)]
+    verified: 基准样本盘 ↔ 3/5 的5爻
+  line4_opportunist:
+    zwds_signals: [太阳坐交友人脉发光, 左辅右弼多]
+  line1_researcher:
+    zwds_signals: [天机巨门坐命钻研分析]
+  line2_hermit:
+    zwds_signals: [田宅天同安逸内秀]
+  line6_role_model:
+    zwds_signals: [天梁坐命福德清高被仰望]
+
+# ─────────────────────────────────────────────
+# M3 四化·煞星·亮度 ↔ 权威与中心（决策轴）
+# ─────────────────────────────────────────────
+m3_mutagens:
+  禄: {meaning: 增益顺遂资源, hd: defined-center-stable, rule: 化禄入宫=自带资源的稳定面}
+  权: {meaning: 掌控主导, hd: authority-domain, rule: 化权入宫=决策诉诸内在权威的领域}
+  科: {meaning: 名声被认可, hd: [defined-throat-or-g], rule: 化科入宫=最被看见的舞台, cross_ref: incarnation-cross-sun-earth}
+  忌: {meaning: 执著阻碍课题, hd: open-center-conditioning, rule: 化忌入宫=课题区易被环境带跑}
+
+m3_rules:
+  - id: R3b
+    name: 四化↔中心双向验证
+    forward: 化忌宫主题 ≈ 开放中心主题 → 🟢 高置信
+    mismatch: 化忌宫 ≠ 任何开放中心 → 记差异点作探索线索（往往是暗课题）
+    status: verified_1sample
+
+m3_sha_open_centers:   # 煞星 ↔ 开放中心（辅助）
+  擎羊: {trait: 刚烈冲突, open_center: root-pressure}
+  陀罗: {trait: 拖延缠绕反复, open_center: root-slowstart}
+  火星: {trait: 急躁爆发, open_center: [root-rush, undefined-emotional]}
+  铃星: {trait: 暗伤是非, open_center: spleen-safety}
+  地空: {trait: 空亡破耗, open_center: any-undefined-leakage}
+  地劫: {trait: 劫夺波折, open_center: any-undefined-leakage}
+
+m3_brightness_definition:
+  庙旺: ≈已定义（稳定发挥）
+  得利平: ≈半定义（受环境影响）
+  陷落: ≈开放（弱、易条件化）
+
+# ─────────────────────────────────────────────
+# M4 大限流年 ↔ 人生章节
+# ─────────────────────────────────────────────
+m4_daxian:
+  correspondence: 大限十年一宫 = 人生章节；换宫年 ≈ 转折期
+  astro_return_reference:   # 天文回归参照（粗对齐用）
+    土星回归: "~29-30岁"
+    天王星对冲: "~42岁"
+    第二次土星回归: "~58-59岁"
+  rules:
+    - 大限化忌 = 课题十年（对照当前大限宫主星+煞曜）
+    - 大限化禄/科 = 顺遂+被看见十年
+    - 流年化忌入命 = 年度课题
+  status: framework_only   # 未做时序验证，仅框架
+
+# ─────────────────────────────────────────────
+# 判定汇总与仲裁
+# ─────────────────────────────────────────────
+scoring:
+  consistent_strong:  ≥2 独立信号指向同一主题 → 🟢 写入全景画像
+  partial:            单侧信号 → 🔵 单侧洞察，标注来源系统
+  difference:         两系统矛盾 → 差异点，如实记录不圆场
+
+adjudication:         # 矛盾仲裁顺序
+  - check_mapping: 先查映射规则本身是否可靠（多源典籍/工具核对）
+  - conservative_first: 两图警告优先于许诺（吉凶并陈原则）
+  - personal_calibration: 无法裁决时列为校准点，留给当事人经验验证
+
+run_pipeline:         # 对任意盘一键跑（P1 实现 compass CLI 时落地）
+  step1: 双引擎排盘（ziwei --check + rlt --check 必须全绿才继续）
+  step2: M1 三方四正元素统计 → 类型对照
+  step3: M2 命身宫定位 → 交叉/通道/角色对照
+  step4: M3 四化煞星亮度 ↔ 权威/开放中心双向验证
+  step5: M4 当前大限主题章节定位
+  step6: 汇总一致点/差异点/单侧洞察 + 置信度
+  step7: 输出理性框架声明 + 可检验行动建议（不给判决）
+
+# ─────────────────────────────────────────────
+# 验证案例：基准样本盘（v0.1 结论 + v0.2 修正标注）
+# ─────────────────────────────────────────────
+validation_case_xu:
+  birth: {date: "1990-03-15", shichen: 申, gender: 男}
+  ziwei_facts:      # 以 compass-ziwei 认证盘为准
+    soul: {palace: soul, branch: 子, stars: [廉贞平, 天相庙], minor: [文曲得, 天魁]}
+    body_palace: {palace: career, branch: 辰, stars: [武曲庙, 右弼, 擎羊庙]}
+    key: 
+      wealth: {branch: 申, stars: [紫微科旺, 天府得]}     # 紫府同宫+化科
+      health: {mutagen: 禄, star: 天机陷, sha: [地劫]}
+      children: {mutagen: 忌, star: 太阴不}               # v0.2注: 太阴亮度"不"非"庙"(v0.1笔误)
+      spirit: {stars: [七杀庙, 文昌陷], sha: [陀罗陷]}    # v0.2修正: 陀罗在福德非命宫
+      parents: {mutagen: 权, star: 天梁旺}
+      surface: {stars: [破军庙], sha: [铃星庙]}
+      spouse: {stars: [贪狼庙], minor: [左辅]}
+      property: {stars: [天同平, 禄存], sha: [地空]}
+      siblings: {stars: [巨门旺, 天马], sha: [火星利]}
+      friends: {stars: [太阳旺]}                          # v0.2注: v0.1写"太阳+铃星坐交友"有误,铃星在迁移
+    five_elements_class: 火六局
+    daxian: "36-45走子女酉(太阴忌) → 46-55走财帛申(紫府科)"
+  hd_facts:
+    type: manifesting-generator
+    profile: "3/5"
+    authority: emotional
+    definition: triple-split
+    defined_centers: [throat, g, heart, sacral, spleen, solar-plexus]
+    open_centers: [head, ajna, root]
+    channels: ["5-15韵律", "12-22开放", "26-44投降企业家"]   # v0.2修正: 非"45-26"
+    incarnation_cross: {angle: right, gates: "47-22-45-26",
+                        note: 设计轴含闸门45国王+26交易者}
+  consistent_points_v02:   # ✅ 仍成立的一致点
+    - {id: 1, theme: MG类型(三方双元素), signals: 2, confidence: green}
+    - {id: 2, theme: 3/5人生角色(廉陀命+破军迁), signals: 3, confidence: green}
+    - {id: 3, theme: 情绪权威(廉贞命+太阴忌子女), signals: 3, confidence: green,
+       note: v0.2去掉了"陀罗坐命"信号,仍有3信号}
+    - {id: 4, theme: 国王交易者(紫府财帛+武曲身宫+交叉45+26+通道26-44), signals: 4,
+       confidence: green, note: 通道名已按R2b规范修正}
+    - {id: 5, theme: 心中心定义↔武曲身宫/事业, signals: 2, confidence: green}
+    - {id: 6, theme: 46-55紫府大限=国王交易者主舞台, signals: 3, confidence: green}
+    - {id: 7, theme: 脾定义↔天机禄疾厄, signals: 2, confidence: yellow}
+    - {id: 8, theme: 36-45太阴忌大限≈42天王对冲课题期, signals: 2, confidence: yellow}
+  corrections_from_v01:
+    - v0.1一致点#3的"陀罗坐命"→陀罗坐福德（内在拖延非外在呈现，语义更准）
+    - v0.1一致点#4的"45-26通道"→闸门45+26为交叉轴、完成通道是26-44
+    - v0.1「铃星坐交友」→铃星在迁移宫（交友太阳干净）
+    - 新发现：擎羊庙坐身宫事业宫辰——武曲庙+擎羊=执行强但易硬碰，
+      与MG快速显化+福德七杀内在急躁形成"急"的三重奏（新增差异点候选）
