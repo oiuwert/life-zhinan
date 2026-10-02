@@ -1,5 +1,9 @@
 # life-zhinan 🧭
 
+[![npm version](https://img.shields.io/npm/v/life-zhinan.svg)](https://www.npmjs.com/package/life-zhinan)
+[![npm downloads](https://img.shields.io/npm/dm/life-zhinan.svg)](https://www.npmjs.com/package/life-zhinan)
+[![license](https://img.shields.io/npm/l/license/life-zhinan.svg)](LICENSE)
+
 **紫微斗数 × 人类图 双系统互证 MCP 服务** —— 一条 `npx` 命令接入任何 agent。
 
 > 两套古老系统对同一张出生盘各自排盘，用机器可读的映射规则做**符号结构互证**：
